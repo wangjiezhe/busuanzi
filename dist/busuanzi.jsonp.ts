@@ -36,7 +36,7 @@
         }) => {
             try {
                 tags.map((tag: string) => {
-                    let element = document.getElementById(`${prefix}_${tag}`);
+                    let element = document.getElementById(`${prefix}_value_${tag}`);
                     if (element != null) { // @ts-ignore
                         element.innerHTML = format(res[tag], style);
                     }

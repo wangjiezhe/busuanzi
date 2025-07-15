@@ -34,7 +34,7 @@
                     let res: any = JSON.parse(xhr.responseText);
                     if (res.success === true) {
                         tags.map((tag: string) => {
-                            let element = document.getElementById(`${prefix}_${tag}`);
+                            let element = document.getElementById(`${prefix}_value_${tag}`);
                             if (element != null) element.innerHTML = format(res['data'][tag], style);
 
                             let container = document.getElementById(`${prefix}_container_${tag}`);
