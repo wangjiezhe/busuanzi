@@ -1,7 +1,7 @@
-FROM golang:1.22-alpine AS builder
+FROM docker.m.daocloud.io/golang:1.22-alpine AS builder
 WORKDIR /app
 
-#ENV GOPROXY=https://goproxy.cn,direct
+ENV GOPROXY=https://goproxy.cn,direct
 COPY . .
 RUN set -evx -o pipefail        \
     && apk update               \
@@ -9,7 +9,7 @@ RUN set -evx -o pipefail        \
     && rm -rf /var/cache/apk/*  \
     && go build -ldflags="-s -w" -o busuanzi main.go
 
-FROM node:21-alpine AS ts-builder
+FROM docker.m.daocloud.io/node:21-alpine AS ts-builder
 WORKDIR /app
 COPY ./dist .
 RUN set -evx -o pipefail        \
@@ -20,7 +20,7 @@ RUN set -evx -o pipefail        \
     && rm -rf pnpm-lock.yaml    \
     && rm -rf tsconfig.json
 
-FROM alpine:3.16
+FROM docker.m.daocloud.io/alpine:3.16
 WORKDIR /app
 
 COPY --from=builder /app/busuanzi /app
