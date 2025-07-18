@@ -1,12 +1,18 @@
 version: "3.8"
 
+networks:
+  redis:
+    external: false
+
 services:
   redis:
     image: "docker.m.daocloud.io/redis:alpine"
+    networks:
+      - redis
     volumes:
       - ./data/redis:/data
-    ports:
-      - 6379:6379
+    # ports:
+    #   - 6379:6379
   
   bsz:
     build: .
@@ -15,6 +21,8 @@ services:
     links:
       - redis
     depends_on:
+      - redis
+    networks:
       - redis
     environment:
       WEB_LOG: true                                     # 是否开启日志
